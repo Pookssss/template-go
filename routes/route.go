@@ -14,8 +14,14 @@ func SetupRoutes(app *fiber.App) {
 	v1App := appRoute.Group("/v1")
 
 	// Users
-	users := v1App.Group("/user")
-	users.Post("/register", controllers.Register)
-	users.Post("/login", controllers.Login)
+	users := v1App.Group("")
+	users.Post("/register", controllers.RegisterEndpoint)
+	users.Post("/login", controllers.LoginEndpoint)
+	users.Get("/user", controllers.UserEndpoint)
+	users.Post("/logout", controllers.LogoutEndpoint)
+
+	agora := v1App.Group("/agora")
+	agora.Get("/projects/:customerKey/:customerSecret", controllers.ListProjectEndpoint)
+	agora.Get("/rules/:appId/:customerKey/:customerSecret", controllers.RuleListByAppIDEndpoint)
 
 }
